@@ -11,17 +11,17 @@ import json
 import logger
 
 log = logger.Logger('main-%Y-%m-%d.log')
+settings = {}
 
 class EmailSender :
 
 	def sendEmails(self, content) :
-		with open('to_addrs.txt', 'r', encoding='UTF-8') as f :
-			for addr in f.readlines() :
-				self.__sendEmail(addr, content)
+		for addr in settings["msgTo"] :
+			self.__sendEmail(addr, content)
 
 	def __sendEmail(self, msgTo, content) :
-		msgFrom = 'hairlessvillager@qq.com'
-		passwd = 'fhbczkwjlcazcfbb'
+		msgFrom = settings["msgFrom"]
+		passwd = settings["passwd"]
 
 		msg = MIMEMultipart()
 		subject = Header(time.strftime("Daily News %Y-%m-%d", time.localtime()), 'utf-8')
@@ -97,6 +97,10 @@ class HotSearchSpider :
 	__updateFlag = True
 	__crawledData = []
 
+	def __init__(self) :
+		with open('settings.json', 'r', encoding='UTF-8') as f :
+			settings = json.load(f)
+
 	def run(self) :
 		self.__runMainLoop()
 
@@ -152,7 +156,7 @@ class HotSearchSpider :
 
 	def __saveData(self, data) :
 		log.info('write data...')
-		with open(time.strftime("%Y-%m-%d.json", time.localtime()), 'w', encoding='UTF-8') as f :
+		with open(time.strftime("../data/%Y-%m-%d.json", time.localtime()), 'w', encoding='UTF-8') as f :
 			json.dump(data, f)
 
 	def __analyzeData(self, data) :

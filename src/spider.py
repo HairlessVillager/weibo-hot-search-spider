@@ -5,8 +5,13 @@ from bs4 import BeautifulSoup
 import logger
 
 log = logger.Logger('spider-%Y-%m-%d.log')
+settings = {}
 
 class Spider :
+
+	def __init__(self) :
+		with open('settings.json', 'r', encoding='UTF-8') as f :
+			settings = json.load(f)
 
 	def run(self) :
 		data = []
