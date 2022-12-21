@@ -95,18 +95,6 @@ class DataAnalyzer :
 class HotSearchSpider :
 	__emailSender = EmailSender()
 	__updateFlag = True
-	__noonToday = time.mktime(
-		time.strptime(
-			str(time.localtime().tm_year)
-			+ ' ' + str(time.localtime().tm_mon)
-			+ ' ' + str(time.localtime().tm_mday)
-			+ ' ' + '12 00 00', '%Y %m %d %H %M %S'))
-	__afternoonToday = time.mktime(
-		time.strptime(
-			str(time.localtime().tm_year)
-			+ ' ' + str(time.localtime().tm_mon)
-			+ ' ' + str(time.localtime().tm_mday)
-			+ ' ' + '13 00 00', '%Y %m %d %H %M %S'))
 	__crawledData = []
 
 	def run(self) :
@@ -119,8 +107,20 @@ class HotSearchSpider :
 			self.__wait()
 
 	def __tryUpdate(self) :
-		isAfterNoon = time.mktime(time.localtime()) > self.__noonToday
-		isBeforeAfternoon = time.mktime(time.localtime()) < self.__afternoonToday
+		__noonToday = time.mktime(
+			time.strptime(
+				str(time.localtime().tm_year)
+				+ ' ' + str(time.localtime().tm_mon)
+				+ ' ' + str(time.localtime().tm_mday)
+				+ ' ' + '12 00 00', '%Y %m %d %H %M %S'))
+		__afternoonToday = time.mktime(
+			time.strptime(
+				str(time.localtime().tm_year)
+				+ ' ' + str(time.localtime().tm_mon)
+				+ ' ' + str(time.localtime().tm_mday)
+				+ ' ' + '13 00 00', '%Y %m %d %H %M %S'))
+		isAfterNoon = time.mktime(time.localtime()) > __noonToday
+		isBeforeAfternoon = time.mktime(time.localtime()) < __afternoonToday
 		log.info('__updateFlag : ' + str(self.__updateFlag))
 		log.info('isAfterNoon : ' + str(isAfterNoon))
 		log.info('isBeforeAfternoon : ' + str(isBeforeAfternoon))
