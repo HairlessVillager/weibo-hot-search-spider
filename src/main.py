@@ -16,10 +16,12 @@ settings = {}
 class EmailSender :
 
 	def sendEmails(self, content) :
+		global settings
 		for addr in settings["msgTo"] :
 			self.__sendEmail(addr, content)
 
 	def __sendEmail(self, msgTo, content) :
+		global settings
 		msgFrom = settings["msgFrom"]
 		passwd = settings["passwd"]
 
@@ -98,6 +100,7 @@ class HotSearchSpider :
 	__crawledData = []
 
 	def __init__(self) :
+		global settings
 		with open('settings.json', 'r', encoding='UTF-8') as f :
 			settings = json.load(f)
 

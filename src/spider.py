@@ -10,6 +10,7 @@ settings = {}
 class Spider :
 
 	def __init__(self) :
+		global settings
 		with open('settings.json', 'r', encoding='UTF-8') as f :
 			settings = json.load(f)
 
@@ -20,6 +21,7 @@ class Spider :
 		log.info('crawledData: %s' % (str(data)))
 
 	def __getDataFromWeibo(self) :
+		global settings
 		data = {}
 		data['time'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 		data['source'] = 'weibo'
@@ -28,10 +30,10 @@ class Spider :
 		text = ''
 		try:
 			response = requests.get(
-					url="https://s.weibo.com/top/summary?cate=realtimehot",
+					url=settings["url"],
 					headers={
-				"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 Edg/96.0.1054.53",
-				"Cookie": "UOR=,,login.sina.com.cn; ALF=1666445729; SCF=AscEHVE2sTV05zTwYj5M7tduM7Zz3ktqPi21c2dTBB0sGFGcFIldixokcQ1yN8xFwVW-ywKnUt3rugqpWgzVXsE.; SINAGLOBAL=7267933806159.166.1634959444829; SUB=_2AkMW3d0wf8NxqwJRmPERzW_nbIx0yQ7EieKggSzrJRMxHRl-yT9jqhdftRB6PV3z3z21fp5a3CkZMXy5gZcyj15_nia0; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9W56DO1wnAXX89yZnIENST5-; _s_tentry=-; Apache=6131946571247.373.1639292770571; ULV=1639292770592:2:1:1:6131946571247.373.1639292770571:1634959444907"},
+				"User-Agent": settings["user-agent"],
+				"Cookie": settings["cookie"]},
 				timeout=30)
 			response.raise_for_status()
 			response.encoding = response.apparent_encoding
