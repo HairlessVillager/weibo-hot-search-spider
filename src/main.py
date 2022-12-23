@@ -97,6 +97,7 @@ class DataAnalyzer :
 class HotSearchSpider :
 	__emailSender = EmailSender()
 	__updateFlag = True
+<<<<<<< HEAD
 	__crawledData = []
 
 	def __init__(self) :
@@ -104,6 +105,22 @@ class HotSearchSpider :
 		with open('settings.json', 'r', encoding='UTF-8') as f :
 			settings = json.load(f)
 
+=======
+	__noonToday = time.mktime(
+		time.strptime(
+			str(time.localtime().tm_year)
+			+ ' ' + str(time.localtime().tm_mon)
+			+ ' ' + str(time.localtime().tm_mday)
+			+ ' ' + '12 00 00', '%Y %m %d %H %M %S'))
+	__afternoonToday = time.mktime(
+		time.strptime(
+			str(time.localtime().tm_year)
+			+ ' ' + str(time.localtime().tm_mon)
+			+ ' ' + str(time.localtime().tm_mday)
+			+ ' ' + '13 00 00', '%Y %m %d %H %M %S'))
+	__crawledData = []
+
+>>>>>>> 6042e7bd5e2def9334b9af5a1100dbbf69fb0619
 	def run(self) :
 		self.__runMainLoop()
 
@@ -114,6 +131,7 @@ class HotSearchSpider :
 			self.__wait()
 
 	def __tryUpdate(self) :
+<<<<<<< HEAD
 		__noonToday = time.mktime(
 			time.strptime(
 				str(time.localtime().tm_year)
@@ -128,6 +146,10 @@ class HotSearchSpider :
 				+ ' ' + '13 00 00', '%Y %m %d %H %M %S'))
 		isAfterNoon = time.mktime(time.localtime()) > __noonToday
 		isBeforeAfternoon = time.mktime(time.localtime()) < __afternoonToday
+=======
+		isAfterNoon = time.mktime(time.localtime()) > self.__noonToday
+		isBeforeAfternoon = time.mktime(time.localtime()) < self.__afternoonToday
+>>>>>>> 6042e7bd5e2def9334b9af5a1100dbbf69fb0619
 		log.info('__updateFlag : ' + str(self.__updateFlag))
 		log.info('isAfterNoon : ' + str(isAfterNoon))
 		log.info('isBeforeAfternoon : ' + str(isBeforeAfternoon))
@@ -159,7 +181,11 @@ class HotSearchSpider :
 
 	def __saveData(self, data) :
 		log.info('write data...')
+<<<<<<< HEAD
 		with open(time.strftime("../data/%Y-%m-%d.json", time.localtime()), 'w', encoding='UTF-8') as f :
+=======
+		with open(time.strftime("%Y-%m-%d.json", time.localtime()), 'w', encoding='UTF-8') as f :
+>>>>>>> 6042e7bd5e2def9334b9af5a1100dbbf69fb0619
 			json.dump(data, f)
 
 	def __analyzeData(self, data) :
